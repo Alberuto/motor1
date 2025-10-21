@@ -9,6 +9,9 @@ public class EnemyMove : MonoBehaviour {
     [Header("Velocidad")]
     [SerializeField] private float velocidad = 2f;
 
+    [Header("Puntos")]
+    [SerializeField] public int puntos;
+
     private bool yendoHaciaB = true;
 
     // Update is called once per frame

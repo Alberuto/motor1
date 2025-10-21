@@ -38,6 +38,15 @@ public class Bala : MonoBehaviour{
             if (sonidoExplosion != null){
 
                 sonidoExplosion.Play();
+
+//version con puntos estaticos:
+//                Datos.Instance.AddPoints(25);
+//                Datos.Instance.MostrarPuntosDinamicos(25,transform.position);
+
+//version con puntos personalizados por enemigo:
+
+                Datos.Instance.AddPoints(collision.gameObject.GetComponent<EnemyMove>().puntos);
+                Datos.Instance.MostrarPuntosDinamicos(collision.gameObject.GetComponent<EnemyMove>().puntos, transform.position);
             }
 
             //sonidoExplosion.Play();
