@@ -14,6 +14,16 @@ public class EnemyMove : MonoBehaviour {
 
     private bool yendoHaciaB = true;
 
+    private void Start(){
+
+        if (puntoA == null) {
+
+            GameObject a = new GameObject("PuntoA_" + name);
+            a.transform.position = transform.position;
+            puntoA = a.transform;
+        }
+    }
+
     // Update is called once per frame
     void Update(){
 
