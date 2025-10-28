@@ -4,14 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class EnemyCollider : MonoBehaviour{
 
-    [SerializeField] private float tiempoEspera;
-
+    //[SerializeField] private float tiempoEspera;
     private PlayerMove playerMove;
     private PlayerAnimation playerAnimation;
     [Header("Sonidos")]
     [SerializeField] private AudioSource sonidoMorir;
     [SerializeField] private AudioSource sonidoDamage;
-
 
     private VidasJugador playerLifes;
     private bool inmune = false;
@@ -41,7 +39,7 @@ public class EnemyCollider : MonoBehaviour{
         sonidoMorir.Play();
         playerAnimation.AnimacionMuerte();
         playerMove.Parar();
-        yield return new WaitForSecondsRealtime (tiempoEspera);
+        yield return new WaitForSecondsRealtime (5);
         Time.timeScale = 1;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
