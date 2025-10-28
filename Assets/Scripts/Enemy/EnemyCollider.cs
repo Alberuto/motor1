@@ -10,9 +10,11 @@ public class EnemyCollider : MonoBehaviour{
     private PlayerAnimation playerAnimation;
     [Header("Sonidos")]
     [SerializeField] private AudioSource sonidoMorir;
+    [SerializeField] private AudioSource sonidoDamage;
+
 
     private VidasJugador playerLifes;
-
+    private bool inmune = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
 
@@ -24,29 +26,29 @@ public class EnemyCollider : MonoBehaviour{
 
         if (other.collider.CompareTag("Enemy")) {
 
-            playerLifes.RemoveLives();
-
-
+            if (!inmune){
+                playerLifes.RemoveLives();
+                sonidoDamage.Play();
+                StartCoroutine(ActivarInmunidad());
+            }
             if (playerLifes.currentLives==0)
                 StartCoroutine(PararYReiniciar());
         }
     }
     private IEnumerator PararYReiniciar() {
 
-
        // Time.timeScale = 0;
-
         sonidoMorir.Play();
-
         playerAnimation.AnimacionMuerte();
-
         playerMove.Parar();
-
         yield return new WaitForSecondsRealtime (tiempoEspera);
-
         Time.timeScale = 1;
-
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        
+    }
+    private IEnumerator ActivarInmunidad(){
+
+        inmune = true;
+        yield return new WaitForSecondsRealtime(5);
+        inmune = false;
     }
 }

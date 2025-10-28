@@ -27,17 +27,12 @@ public class Datos : MonoBehaviour{
     // Update is called once per frame
     void Update(){
 
-
-
     }
     public void MostrarPuntosDinamicos(int punts, Vector3 posicionMundoPowerUp) {
 
         if (puntosDinamicos)
-
             puntosDinamicos.text = "+" + punts;
-
         //convertir el mundo - > Pantalla
-
         Vector3 sceenPos = Camera.main.WorldToScreenPoint(posicionMundoPowerUp + Vector3.up * 1.2f);
         puntosDinamicos.transform.position = sceenPos;
 
@@ -58,7 +53,6 @@ public class Datos : MonoBehaviour{
             RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRT, sceenPos, canvas.worldCamera, out localPoint); 
             rt.anchoredPosition=localPoint;
         }
-
         puntosDinamicos.gameObject.SetActive(true);
         StartCoroutine(AnimarPuntosUI(rt));
     }
@@ -73,7 +67,6 @@ public class Datos : MonoBehaviour{
             rt.anchoredPosition = start+new Vector2(0, t * 40f);
             yield return null;
         }
-
         puntosDinamicos.gameObject.SetActive(false);
     }
     public void Awake(){
@@ -87,7 +80,6 @@ public class Datos : MonoBehaviour{
             DontDestroyOnLoad(gameObject);
         }
     }
-
     public void ActualizarDatos() { 
 
         if(puntosTexto)

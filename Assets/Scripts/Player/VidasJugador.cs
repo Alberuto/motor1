@@ -5,17 +5,14 @@ using UnityEngine.UI;
 public class VidasJugador : MonoBehaviour{
 
     [Header("Imágenes")] [SerializeField] private List<Image> hearts = new List<Image>();
-
     [Header("Config")][SerializeField] private int maxLives;
 
     public int currentLives;
-
     public static VidasJugador vj;
 
     private void Awake(){
 
         maxLives = Mathf.Clamp(maxLives, 0, hearts.Count);
-       // RemoveLives();
         SetLives(maxLives);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -25,10 +22,6 @@ public class VidasJugador : MonoBehaviour{
     // Update is called once per frame
     void Update() {
 
-    }
-    private void showHearts() { 
-        
-    
     }
     private void SetLives(int vidas) { 
         

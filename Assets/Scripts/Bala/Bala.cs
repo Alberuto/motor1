@@ -24,13 +24,9 @@ public class Bala : MonoBehaviour{
             sonidoDisparo.Play();
         }
         rb=GetComponent<Rigidbody2D>();
-        
         rb.linearVelocity = transform.right * velocidad;
-
         Destroy(gameObject, tiempoVida);
-
     }
-
     private void OnTriggerEnter2D(Collider2D collision){
 
         if (collision.CompareTag("Enemy")) {
@@ -38,27 +34,19 @@ public class Bala : MonoBehaviour{
             if (sonidoExplosion != null){
 
                 sonidoExplosion.Play();
-
 //version con puntos estaticos:
 //                Datos.Instance.AddPoints(25);
 //                Datos.Instance.MostrarPuntosDinamicos(25,transform.position);
-
 //version con puntos personalizados por enemigo:
-
                 Datos.Instance.AddPoints(collision.gameObject.GetComponent<EnemyMove>().puntos);
                 Datos.Instance.MostrarPuntosDinamicos(collision.gameObject.GetComponent<EnemyMove>().puntos, transform.position);
             }
-
             //sonidoExplosion.Play();
             Destroy(collision.gameObject);
             Destroy(gameObject,3f);
-
         }
     }
-
-    // Update is called once per frame
     void Update(){
-
         
     }
 }

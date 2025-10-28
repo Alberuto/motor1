@@ -5,33 +5,22 @@ using UnityEngine.InputSystem;
 
 public class PlayerMove : MonoBehaviour{
 
-    [Header("Movimiento")][SerializeField] //aun siendo privada la variable vM se puede acceder desde inspector
-    
-    private float velocidadMovimiento=6f;
+    [Header("Movimiento")][SerializeField] private float velocidadMovimiento=6f; /*aun siendo privada la variable vM se puede acceder desde inspector*/
+    [Header("Salto")][SerializeField] private float fuerzaSalto = 7f;
+    [Header("Sonidos")]
+    [SerializeField] private AudioSource sonidoSalto;
+    [SerializeField] private AudioSource sonidoAndar;
+
     private Vector2 entradaMovimiento;
     private Rigidbody2D rb;
     private SpriteRenderer sprite;
     public bool mirandoDerecha=true;
     private bool enSuelo = true;
-    [Header("Sonidos")]
-    [SerializeField] private AudioSource sonidoSalto;
-    [SerializeField] private AudioSource sonidoAndar;
 
-    public bool EnSuelo() {
-
-        return enSuelo;
-    
-    }
-
-    [Header("Salto")] [SerializeField] private float fuerzaSalto=7f;
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start(){
 
         rb = GetComponent<Rigidbody2D>();
         sprite = rb.GetComponent<SpriteRenderer>();
-
     }
     public void OnMove(InputValue valor) {
 
@@ -40,14 +29,12 @@ public class PlayerMove : MonoBehaviour{
             Girar(false);
         else if (entradaMovimiento.x < 0 && mirandoDerecha)
             Girar(true);
-
     }
     private void FixedUpdate(){
 
         var v = rb.linearVelocity;
         v.x = entradaMovimiento.x*velocidadMovimiento;
         rb.linearVelocity = v;
-
     }
     private void Girar(bool aIzquierda) { 
     
@@ -61,8 +48,6 @@ public class PlayerMove : MonoBehaviour{
 
             enSuelo = true;
         }
-
-
         if (other.gameObject.CompareTag("Platform")) {
 
             enSuelo = true;
@@ -84,20 +69,17 @@ public class PlayerMove : MonoBehaviour{
     public void Parar() {
 
       GetComponent<PlayerInput>().enabled = false;
-    
     }
     public void OnJump(InputValue valor) {
 
         if (!enSuelo)
             return;
-
         var v = rb.linearVelocity;
         v.y = 0f;
         rb.linearVelocity = v;
         rb.AddForce(Vector2.up * fuerzaSalto, ForceMode2D.Impulse);
         if(!sonidoSalto.isPlaying)
             sonidoSalto.Play();
-
         //Debug.Log(valor);
     }
     // Update is called once per frame consume recursos
@@ -120,5 +102,9 @@ public class PlayerMove : MonoBehaviour{
          else if(entradaMovimiento.x<0 && mirandoDerecha)
              Girar(true);
         */
+    }
+    public bool EnSuelo(){
+
+        return enSuelo;
     }
 }
