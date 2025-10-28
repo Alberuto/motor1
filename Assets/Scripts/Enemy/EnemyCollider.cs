@@ -11,20 +11,24 @@ public class EnemyCollider : MonoBehaviour{
     [Header("Sonidos")]
     [SerializeField] private AudioSource sonidoMorir;
 
+    private VidasJugador playerLifes;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start() {
 
         playerMove = GetComponent<PlayerMove>();
         playerAnimation = GetComponent<PlayerAnimation>();
-
+        playerLifes = GetComponent<VidasJugador>();
     }
     private void OnCollisionEnter2D(Collision2D other) {
 
         if (other.collider.CompareTag("Enemy")) {
 
-            StartCoroutine(PararYReiniciar());
+            playerLifes.RemoveLives();
 
+
+            if (playerLifes.currentLives==0)
+                StartCoroutine(PararYReiniciar());
         }
     }
     private IEnumerator PararYReiniciar() {

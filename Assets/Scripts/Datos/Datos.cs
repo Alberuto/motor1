@@ -14,6 +14,8 @@ public class Datos : MonoBehaviour{
 
     public int puntos;
 
+    public int vidas;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start(){
 
@@ -21,8 +23,6 @@ public class Datos : MonoBehaviour{
             puntosDinamicos.gameObject.SetActive(false);
 
         ActualizarDatos();
-        
-
     }
     // Update is called once per frame
     void Update(){
@@ -39,15 +39,12 @@ public class Datos : MonoBehaviour{
         //convertir el mundo - > Pantalla
 
         Vector3 sceenPos = Camera.main.WorldToScreenPoint(posicionMundoPowerUp + Vector3.up * 1.2f);
-
         puntosDinamicos.transform.position = sceenPos;
 
         if (sceenPos.z < 0f) {
 
             puntosDinamicos.gameObject.SetActive(false);
-
         }
-
         RectTransform rt = puntosDinamicos.rectTransform;
 
         if (canvas.renderMode == RenderMode.ScreenSpaceOverlay) {
@@ -57,19 +54,14 @@ public class Datos : MonoBehaviour{
         }else { 
             
             RectTransform canvasRT = canvas.transform as RectTransform;
-
             Vector2 localPoint;
-
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRT, sceenPos, canvas.worldCamera, out localPoint);
-                
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvasRT, sceenPos, canvas.worldCamera, out localPoint); 
             rt.anchoredPosition=localPoint;
         }
 
         puntosDinamicos.gameObject.SetActive(true);
         StartCoroutine(AnimarPuntosUI(rt));
-
     }
-
     private IEnumerator AnimarPuntosUI(RectTransform rt) {
 
         float duration = 0.4f;
@@ -86,19 +78,20 @@ public class Datos : MonoBehaviour{
     }
     public void Awake(){
 
-        if (Instance == null)
+        if (Instance != null && Instance != this){
+            Destroy(gameObject);
+            //return; puedes descomentar y quitar el else pero no me mola.
+        }
+        else{
             Instance = this;
-
-        else
-            Destroy(gameObject);   
+            DontDestroyOnLoad(gameObject);
+        }
     }
 
     public void ActualizarDatos() { 
 
         if(puntosTexto)
             puntosTexto.text = "Puntuacion: "+puntos.ToString();
-
-
     }
     public void AddPoints(int points) {
         puntos += points;
