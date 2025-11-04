@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PowerUp : MonoBehaviour{
 
@@ -21,9 +22,17 @@ public class PowerUp : MonoBehaviour{
             Datos.Instance.AddPoints(puntosPowerUp);
             Datos.Instance.MostrarPuntosDinamicos(puntosPowerUp, transform.position);
 
+            if (--collision.GetComponent<ContadorPowerUp>().powerUps == 0) {
+
+                Debug.Log("win");
+                SceneManager.LoadScene("Nivel2", LoadSceneMode.Single);
+            }
+
+
             if (audioSource != null) {
                 audioSource.Play();
                 Destroy(gameObject,audioSource.clip.length);
+
             }
             else
                 Destroy(gameObject);
