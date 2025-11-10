@@ -20,13 +20,11 @@ public class ControlHub : MonoBehaviour{
 
             Debug.Log($"Escena {sceneName} no encontrada");
         }
-    
     }
     void Start(){
         
     }
-    void Update()
-    {
+    void Update(){
         
     }
 }
